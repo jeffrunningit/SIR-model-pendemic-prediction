@@ -1,194 +1,88 @@
 #include <cmath>
-#include <ctime>
-#include <fstream>
+#include <random>
+#include <vector>
 #include <iostream>
+
 #define PI 3.141592
-#define boxsize 30
+#define BOXSIZE 30
+#define DOTVEL 0.05
+
 using namespace std;
 
-class dot
-{
+static double getRandomDouble(double min, double max) {
+    static random_device rd;
+    static mt19937 gen(rd());
+    uniform_real_distribution<double> dis(min, max);
+    return dis(gen);
+}
+
+class Dot {
 public:
-	double x;
-	double y;
-	double vx;
-	double vy;
-	int state;
-	int infected_no;
-	int infected_days;
-	dot(){
-		x = (rand() / (double)RAND_MAX) * 30;
-		y = (rand() / (double)RAND_MAX) * 30;
-		double randangle = rand() / (double)RAND_MAX * 2 * PI;
-		vx = 0.05*sin(randangle);
-		vy = 0.05*cos(randangle);
-		state = 0;
-		infected_no = 0;
-		infected_days = 0;
-	};
-	void move()
-	{
-		x += vx;
-		y += vy;
-		if (x < 0) {
-			x = -x;
-			vx = -vx;
-		}
-		else if (x > boxsize) {
-			x = boxsize * 2 - x;
-			vx = -vx;
-		}
-		if (y < 0) {
-			y = -y;
-			vy = -vy;
-		}
-		else if (y > boxsize) {
-			y = boxsize * 2 - y;
-			vy = -vy;
-		}
-		if(state == 1){
-			infected_days++;
-		}
-	}
+    double x, y, vx, vy;
+    int state; // 0: Susceptible, 1: Infected, 2: Recovered
+    int infected_no = 0;
+    int infected_days = 0;
+
+    
+
+    Dot() { // initialize random position and velocity
+        x = getRandomDouble(0, BOXSIZE);
+        y = getRandomDouble(0, BOXSIZE);
+        double randangle = getRandomDouble(0, 2 * PI);
+        vx = DOTVEL * sin(randangle);
+        vy = DOTVEL * cos(randangle);
+        state = 0;
+    }
+
+    void move() {
+        x += vx;
+        y += vy;
+
+        // Boundary conditions
+        if (x < 0 || x > BOXSIZE) vx *= -1;
+        if (y < 0 || y > BOXSIZE) vy *= -1;
+
+        if (state == 1) infected_days++;
+    }
 };
-class dotarray
-{
+
+class DotArray {
 public:
-	dot* d;
-	int N;
-	int susceptible;
-	int infected;
-	int removed;
-	double R;
-	int infection_duration;
-	dotarray(int arraysize, int dur)
-	{
-		N = arraysize;
-		d = new dot[N];
-		susceptible = arraysize;
-		infected = 0;
-		removed = 0;
-		R = 0;
-		infection_duration = dur;
-	}
-	void infectCentre()
-	{
-		double distFromCent = 1000;
-		int centMarker = 0;
-		for(int i = 0; i < N; i++)
-		{
-			double dx = d[i].x - boxsize/2;
-			double dy = d[i].y - boxsize/2;
-			double dist = sqrt(dx*dx + dy*dy);
-			if(dist < distFromCent)
-			{
-				centMarker = i;
-				distFromCent = dist;
-			}
-		}
-		d[centMarker].state = 1;
-	}
-	void sircount()
-	{
-		susceptible = 0;
-		infected = 0;
-		removed = 0;
-		R = 0;
-		for (int i = 0; i < N; i++)
-		{
-			if(d[i].state == 1)
-			{
-				infected++;
-				R += (double)d[i].infected_no / (double)d[i].infected_days * (double)infection_duration;
-			}
-			else if(d[i].state == 0)
-			{
-				susceptible++;
-			}
-			else
-			{
-				removed++;
-			}
-		}
-		if(infected)
-		R = (double)R / (double)(infected+removed);
-	}
-	double ijdistsqr(dot a, dot b)
-	{
-		double dx = a.x - b.x;
-		double dy = a.y - b.y;
-		return dx*dx + dy*dy;
-	}
-	void doStep(double infection_probability, double radsqr)
-	{
-		for (int i = 0; i < N; ++i)	//infect
-		{
-			for (int j = 0; j < N; ++j)
-			{
-				if(d[i].state == 1 && d[j].state == 0 && (rand()/(double)RAND_MAX)<infection_probability && ijdistsqr(d[i], d[j]) < radsqr)
-				{
-					d[j].state = 1;
-					d[i].infected_no += 1;
-				}
-			}
-		}
-		for(int i = 0; i < N; i++)	//move a step
-		{
-			d[i].move();
-		}
-		for(int i = 0; i < N; i++)	//check infection time
-		{
-			if(d[i].infected_days >= infection_duration)
-			d[i].state = 2;
-		}
-	}
-};
-class animation
-{
-public:
-	ofstream data;
-	void refresh(dotarray dots)
-	{
-		data.open("people.csv", ofstream::out);
-		if (data.is_open() == false)
-			{
-				cout << "File write error";
-				system("pause");
-				exit(1);
-			}
-		data << " ,x,y,state" << endl;
-		for(int i = 0; i < dots.N; i++)
-		{
-			data << i << "," << dots.d[i].x << "," << dots.d[i].y << "," << dots.d[i].state << endl;
-		}	
-		data.close();
-	}
-};
-class sirdata
-{
-public:
-	ofstream data;
-	void start()
-	{
-		data.open("sir.csv", ofstream::out);
-		if (data.is_open() == false)
-		{
-			cout << "File write error";
-			system("pause");
-			exit(1);
-		}
-		data << "Time,Susceptible,Infected,Removed,R value" << endl;
-	}
-	void output(int step, dotarray dots)
-	{
-		data << step << ",";
-		data << dots.susceptible << ",";
-		data << dots.infected << ",";
-		data << dots.removed << ",";
-		data << dots.R << endl;
-	}
-	void close()
-	{
-		data.close();
-	}
+    vector<Dot> dots;
+    int susceptible = 0, infected = 0, recovered = 0;
+
+    DotArray(int N) {
+        dots.reserve(N);
+        for (int i = 0; i < N; ++i) {
+            dots.emplace_back();
+        }
+        dots[0].state = 1; // Start with one infected dot
+    }
+
+    void update(double infection_radius, double infection_probability, int infection_duration) {
+        for (Dot& dot : dots) {
+            dot.move();
+        }
+
+        for (int i = 0; i < dots.size(); i++) {
+            if (dots[i].state == 2) continue;
+
+            for (int j = i + 1; j < dots.size(); j++) {
+                if (dots[j].state + dots[i].state != 1) continue;
+                // Distance check + probability check
+                double dx = dots[i].x - dots[j].x; // distance check
+                double dy = dots[i].y - dots[j].y;
+                if (dx * dx + dy * dy <= infection_radius * infection_radius && getRandomDouble(0, 1) < infection_probability) {
+                    dots[j].state = 1;  // infected
+                }
+                
+            }
+            
+        }
+
+        for (Dot& dot : dots) {
+            if (dot.state == 1 && dot.infected_days > infection_duration)
+                dot.state = 2;
+        }
+    }
 };
