@@ -31,20 +31,20 @@ public:
 		x += vx;
 		y += vy;
 		if (x < 0) {
-		x = -x;
-		vx = -vx;
+			x = -x;
+			vx = -vx;
 		}
 		else if (x > boxsize) {
-		x = boxsize * 2 - x;
-		vx = -vx;
+			x = boxsize * 2 - x;
+			vx = -vx;
 		}
 		if (y < 0) {
-		y = -y;
-		vy = -vy;
+			y = -y;
+			vy = -vy;
 		}
 		else if (y > boxsize) {
-		y = boxsize * 2 - y;
-		vy = -vy;
+			y = boxsize * 2 - y;
+			vy = -vy;
 		}
 		if(state == 1){
 			infected_days++;

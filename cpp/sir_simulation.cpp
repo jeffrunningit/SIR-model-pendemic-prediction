@@ -1,6 +1,6 @@
 //#include <ctime>
 #include <iostream>
-#include <windows.h>
+//#include <windows.h>
 #include "dotsmodel.h"
 using namespace std;
 
@@ -12,7 +12,7 @@ int main()
 	double stepperday = 10;
 	bool animate = 0;
 	bool plotsir = 1;
-	srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
 	int N = 900;
 
 	while(1){
@@ -25,12 +25,12 @@ int main()
 	cout << "animate? ";
 	cin >> animate;
 	if(animate){
-	cout << "Starting... in 3";
-	Sleep(1000);
-	cout << "\b2";
-	Sleep(1000);
-	cout << "\b1";
-	Sleep(1000);
+	// cout << "Starting... in 3";
+	// Sleep(1000);
+	// cout << "\b2";
+	// Sleep(1000);
+	// cout << "\b1";
+	// Sleep(1000);
 	}
 
 	ofstream title("title.txt");
