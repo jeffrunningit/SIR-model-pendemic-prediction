@@ -1,8 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.stats.qmc import PoissonDisk
 from scipy.spatial import KDTree
-from itertools import product
 
 
 class Population:
