@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virus Simulation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>SIR model Simulation</h2>
+    <h3>Current parameters:</h3>
+    <p>
+        Infection radius: 
+        <span id="currentRad">1</span>m 
+        Infection Probability: 
+        <span id="currentProb">0.5</span> 
+        Infectious Period:
+        <span id="currentPeriod">3</span> days
+    </p>
+    <canvas id="canvas">Canvas test</canvas>
+    <h3>Change parameters here:</h3>
+    <p>
+        <label for="infectionRadius">Infection radius:</label>
+        <input type="number" id="infectionRadius" step="0.1" value="1">
+        m
+    </p>
+    <p>
+        <label for="infectionProb">Infection Probability:</label>
+        <input type="number" id="infectionProb" step="0.02" value="0.5">
+    </p>
+    <p>
+        <label for="infectiousPeriodDay">Infectious Period:</label>
+        <input type="number" id="infectiousPeriodDay" step="0.01" value="3">
+        days
+    </p>
+    
+    <!-- Restart Button -->
+    <h3>Day elapsed: <span id="simulationDay">0</span></h3>
+    <p>Parameters only take effect after restarting</p>
+    <p>
+        <button id="restartBtn">Restart</button>
+        <button id="pauseBtn">Begin</button>
+    </p>
+    <script src="{{ url_for('static', filename='animation.js') }}"></script>
+</body>
+</html>

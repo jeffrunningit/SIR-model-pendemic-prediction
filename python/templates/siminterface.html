@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIR Simulation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>SIR simulation</h1>
+    <div class="simulation-container">
+        
+        <!-- Sidebar with Parameters & Controls -->
+        <div class="sidebar">
+            <h3>30m x 30m simulation box</h3>
+            <h3>Population size: N=900</h3>
+            <h3>Current Parameters:</h3>
+            <p id="parameters">
+                Infection radius: <span id="currentRad">1</span>m
+                Infection Probability: <span id="currentProb">50</span>% 
+                Infectious Period: <span id="currentPeriod">5</span> days
+            </p>
+    
+            <!-- User Input Section -->
+            <h3>Change Parameters:</h3>
+            <p>
+                <label for="infectionRadius">Infection radius:</label>
+                <input type="number" id="infectionRadius" min="0.1" max="50" step="0.1" value="1"> m
+            </p>
+            <p>
+                <label for="infectionProb">Infection Probability:</label>
+                <input type="number" id="infectionProb" min="0" max="100" step="2" value="50">%
+            </p>
+            <p>
+                <label for="infectiousPeriodDay">Infectious Period:</label>
+                <input type="number" id="infectiousPeriodDay" min="1" max="100" step="1" value="5"> days
+            </p>
+            <p class="small-text">New parameters only take effect 
+                after restarting</p>
+            <h3>Simulation Speed:</h3>
+            <div class="slider-container">
+                <p>
+                    <!-- <label for="fpsSlider"></label> -->
+                    <input type="range" id="fpsSlider" min="5" max="500" step="5" value="30">
+                    <span id="fpsValue">30</span> FPS
+                </p>
+            </div>
+            <!-- Buttons -->
+            <button id="restartBtn">Restart</button>
+            <button id="pauseBtn">Begin</button>
+        </div>
+
+        <!-- Canvas -->
+        <div>
+            <canvas id="canvas" width="500" height="500"></canvas>
+            <!-- <h3>Day elapsed: <span id="simulationDay">0</span></h3> -->
+            <h3 id="day-counter">Days elapsed: <span id="simulationDay">0</span> 
+                (<span id="daysPerSec">2</span> days per second) </h3>
+            <h3><span id="totalInfected"></span>% in total have been infected.</h3>    
+            <p id="diseaseStatus" class="hidden">The disease is eradicated. No infected remain. </p>
+        </div>
+    </div>
+    <div class="graph-container">
+        <canvas id="stateChart"></canvas>
+    </div>
+    <footer id="footer">
+        <p>Created by <strong>Jeffrey Suen</strong>
+            <a id="github-link" href="https://github.com/jeffrunningit/SIR-model-pendemic-prediction" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" 
+                 alt="GitHub" id="github-icon">
+            </a>
+        </p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='animation.js') }}"></script>
+</body>
+</html>

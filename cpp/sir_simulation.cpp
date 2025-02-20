@@ -9,7 +9,6 @@ using namespace std;
 int main() {
     double infection_radius = 1, infection_probability = 0.5;
     int infection_duration = 10, N = 10000;
-    bool animate = false;
 
     srand(time(nullptr));
 

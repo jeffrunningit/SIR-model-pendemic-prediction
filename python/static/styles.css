@@ -1,0 +1,151 @@
+/* 🔹 Add transition effect for smooth updates */
+#parameters span {
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+/* 🔹 Style the entire page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #000000;
+    text-align: center;
+}
+
+/* 🔹 Use Flexbox to position the canvas & sidebar */
+.simulation-container {
+    display: flex;
+    align-items: flex-start; 
+    justify-content: center;
+    gap: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+/* 🔹 Center and style the graph */
+.graph-container {
+    width: 80%;
+    max-width: 700px;
+    height: 300px;
+    margin: 20px auto;  /* Centers the graph */
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔹 Style the canvas (simulation box) */
+#canvas {
+    border: 2px solid white;
+    background-color: black;
+    border-radius: 5px;
+}
+/* 🔹 Sidebar for controls (position on the right) */
+/* 🔹 Sidebar Layout */
+.sidebar {
+    width: 250px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/* 🔹 "Day Elapsed" Styling */
+#simulationDay {
+    font-size: 22px;
+    font-weight: bold;
+    color: #d32f2f; /* Red for emphasis */
+}
+
+.hidden {
+    display: none;
+}
+#diseaseStatus {
+    font-size: 18px;
+    font-weight: bold;
+    color: #19692c;  /* Green color */
+    text-align: center;
+    margin-top: 10px;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* 🔹 Small Text for Parameter Notice */
+.small-text {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 10px;
+}
+/* 🔹 Style input fields */
+input {
+    width: 60px;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.slider-container p {
+    display: flex;
+    align-items: center; /* 🔥 Ensures the slider and text align */
+    gap: 10px; /* Adds spacing between slider and text */
+}
+
+#fpsSlider {
+    width: 50%;
+    flex-grow: 1; 
+    margin-top: 3px;
+}
+
+#fpsValue {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+/* 🔹 Style buttons */
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    background: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* 🔹 Style for the GitHub icon */
+#github-icon {
+    width: 30px; /* 🔹 Set icon size */
+    height: 30px;
+    margin-left: 10px; /* 🔹 Space from text */
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 🔹 Style the parameter display */
+#parameters {
+    font-size: 18px;
+    font-weight: bold;
+    background: #e3f2fd;
+    padding: 10px;
+    border-radius: 8px;
+}
+/* 🔹 Style the footer */
+#footer {
+    font-size: 16px;
+    text-align: center;
+    color: #666;
+    margin-top: 20px;
+    padding: 10px;
+    background: #f4f4f4;
+    border-top: 1px solid #ddd;
+}
+
+/* 🔹 Animate updated parameters */
+.flash {
+    color: red;
+    transform: scale(1.2);
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
