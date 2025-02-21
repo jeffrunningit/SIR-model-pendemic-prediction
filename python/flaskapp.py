@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 import numpy as np
+import os
 import sim_latest
 
 stepsPerDay = 10
@@ -57,6 +58,6 @@ def step():
     return jsonify({"message": "Stepped"}), 200
 
     
-
+debug_mode = os.environ.get("DEBUG", "True").lower() == "true"
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=debug_mode)
