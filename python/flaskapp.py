@@ -7,7 +7,7 @@ sim1 = sim_latest.Population(
     infection_radius_m=1,
     infection_probability=0.5,
     infectious_period_day=3,
-    N=900,
+    N=600,
     max_speed_mpday=1
 )
 

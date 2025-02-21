@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const boxSize = 30;  // Match Python simulation size
-const N = 900;  // Number of particles
+const N = 600;  // Number of particles
 let FPS = 15;  // Frames per second
 
 canvas.width = 500;
@@ -16,7 +16,7 @@ let infectiousPeriodDay;
 
 // For cumulative chart data
 let timeLabels = [0];  // Stores the days elapsed
-let susData = [899];  // Stores the number of susceptible people
+let susData = [N-1];  // Stores the number of susceptible people
 let infData = [1];  // Stores the number of infected people
 let remData = [0];  // Stores the number of removed people
 

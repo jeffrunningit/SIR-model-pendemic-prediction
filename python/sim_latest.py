@@ -7,7 +7,7 @@ class Population:
     def __init__(self, infection_radius_m=1, 
                  infection_probability=0.5, 
                  infectious_period_day=3, 
-                 N=900, max_speed_mpday=1):
+                 N=600, max_speed_mpday=1):
         
         self.N = N  # Number of particles
         self.box_size = 30  # Size of the simulation box
