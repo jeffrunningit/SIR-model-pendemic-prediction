@@ -93,6 +93,11 @@ input {
     flex-grow: 1; 
     margin-top: 3px;
 }
+#fpsSlider {
+    width: 60%;
+    flex-grow: 1; 
+    margin-top: 3px;
+}
 
 /* 🔹 Style buttons */
 button {
