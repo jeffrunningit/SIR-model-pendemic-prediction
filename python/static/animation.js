@@ -103,14 +103,24 @@ function fetchData() {
         });
 }
 
+let controller = new AbortController();
+
 function runSim() {
     if (isPaused) return;
 
-    fetch(`/step?stepsPerDay=${stepsPerDay}`)  // ✅ Send stepsPerFrame to Flask
+    controller = new AbortController();
+
+    fetch(`/step?stepsPerDay=${stepsPerDay}`, { signal: controller.signal })  // ✅ Send stepsPerFrame to Flask
         .then(response => response.json())  // ✅ Expect JSON response
         .then(() => fetchData()) 
-        .catch(error => console.error("Error in runSim:", error));
-    
+        .catch(error => {
+            if (error.name === "AbortError") {
+                console.log("Fetch aborted due to pause.");
+            } else {
+                console.error("Error in runSim:", error);
+            }
+        });
+
     if (!isPaused){
         setTimeout(runSim, 1000 / FPS);  // ✅ Always render at 30 FPS max
     }
