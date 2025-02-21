@@ -88,15 +88,10 @@ input {
     gap: 10px; /* Adds spacing between slider and text */
 }
 
-#fpsSlider {
-    width: 50%;
+#speedSlider {
+    width: 80%;
     flex-grow: 1; 
     margin-top: 3px;
-}
-
-#fpsValue {
-    font-weight: bold;
-    margin-left: 10px;
 }
 
 /* 🔹 Style buttons */

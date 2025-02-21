@@ -2,11 +2,13 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const boxSize = 30;  // Match Python simulation size
 const N = 900;  // Number of particles
+const FPS = 30;  // Frames per second
 
 canvas.width = 500;
 canvas.height = 500;
 
-let fps = 30; // each frame is 1 step
+let stepsPerDay = 5;
+let daysPerSec = 30/5;
 
 let infectionRadius;
 let infectionProb;
@@ -29,12 +31,13 @@ let reachedEnd = false;
 startSim(); // Start simulation
 initializeChart();
 
-// Buttons
+// Restart button
 document.getElementById("restartBtn").addEventListener("click", function() {
     startSim();
     initializeChart();
+    document.getElementById("pauseBtn").innerText = isPaused ? "Begin" : "Pause";
 });
-
+// Pause button
 document.getElementById("pauseBtn").addEventListener("click", function() {
     isPaused = !isPaused;  
     document.getElementById("pauseBtn").innerText = isPaused ? "Resume" : "Pause";
@@ -42,11 +45,12 @@ document.getElementById("pauseBtn").addEventListener("click", function() {
         runSim();  
     }
 });
-
-document.getElementById("fpsSlider").addEventListener("input", function() {
-    fps = parseInt(this.value);
-    document.getElementById("fpsValue").innerText = fps;
-    document.getElementById("daysPerSec").innerText = (fps/15).toFixed(1);
+// Speed slider
+document.getElementById("speedSlider").addEventListener("input", function() {
+    daysPerSec = this.value;
+    stepsPerDay = Math.round(FPS / daysPerSec);
+    document.getElementById("simSpeed").innerText = parseInt(daysPerSec);
+    //document.getElementById("daysPerSec").innerText = (fps/15).toFixed(1);
 });
 
 function startSim() {
@@ -58,7 +62,9 @@ function startSim() {
     updateAnimatedValue("currentRad", infectionRadius);
     updateAnimatedValue("currentProb", infectionProb*100);
     updateAnimatedValue("currentPeriod", infectiousPeriodDay);
-
+    reachedEnd = false;
+    document.getElementById("diseaseStatus").classList.add("hidden");
+    document.getElementById("pauseBtn").classList.remove("hidden")
 
     fetch("/start", { 
         method: "POST",
@@ -75,8 +81,6 @@ function startSim() {
             fetchData();
         });
     
-    reachedEnd = false;
-    document.getElementById("diseaseStatus").classList.add("hidden");
 }
 
 function fetchData() {
@@ -92,7 +96,8 @@ function fetchData() {
             if (data.state_count[1] === 0 && !reachedEnd) {
                 reachedEnd = true;
                 isPaused = true;
-                document.getElementById("pauseBtn").innerText = "Continue";
+                document.getElementById("pauseBtn").classList.add("hidden");
+                document.getElementById("pauseBtn").innerText = "Begin";
                 document.getElementById("diseaseStatus").classList.remove("hidden");
             }
         });
@@ -100,14 +105,16 @@ function fetchData() {
 
 function runSim() {
     if (isPaused) return;
-    fetch("/step").then(() => {
-        fetchData();
-        if (!isPaused){
-            setTimeout(runSim, 1000/fps);
-        }
-    });
-}
 
+    fetch(`/step?stepsPerDay=${stepsPerDay}`)  // ✅ Send stepsPerFrame to Flask
+        .then(response => response.json())  // ✅ Expect JSON response
+        .then(() => fetchData()) 
+        .catch(error => console.error("Error in runSim:", error));
+    
+    if (!isPaused){
+        setTimeout(runSim, 1000 / FPS);  // ✅ Always render at 30 FPS max
+    }
+}
 
 function drawParticles(boxsize, positions, states) {
     

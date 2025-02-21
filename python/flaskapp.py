@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify, request
 import numpy as np
 import sim_latest
 
-stepsPerDay = 15
+stepsPerDay = 10
 sim1 = sim_latest.Population(
     infection_radius_m=1,
     infection_probability=0.5,
@@ -52,6 +52,7 @@ def get_data():
 
 @app.route('/step')
 def step():
+    stepsPerDay = int(request.args.get('stepsPerDay'))
     sim1.step(stepsPerDay)
     return jsonify({"message": "Stepped"}), 200
 

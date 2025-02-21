@@ -44,16 +44,17 @@ class Population:
         self.velocities[center_index] = self.velocities[center_index] * max_speed_mpday/np.linalg.norm(self.velocities[center_index])
         self.infected_time = np.zeros(N, dtype=int)
 
-        # Step tracking
-        self.stepcount = 0
+        # Time tracking
         self.day = 0
+        self.day_float = 0
         
-    def step(self, stepsPerday):
+    def step(self, stepsPerday = 15):
         """Move forward by a step"""
-        self.move(stepsPerday)
-        self.stepcount += 1
+        self.move(dt=1/stepsPerday)
+        self.day_float += 1 / stepsPerday
+
         # Infect and update once a day
-        if self.stepcount % stepsPerday == 0:
+        if self.day_float >= self.day + 1:
             self.infect()
             self.update_infected_time()
             self.statescount = np.array([
@@ -64,9 +65,8 @@ class Population:
             self.day += 1
             
 
-    def move(self, stepsPerDay = 1):
+    def move(self, dt):
         """Update particle positions with periodic boundary conditions"""
-        dt = 1 / stepsPerDay
         self.positions += self.velocities * dt
         
         # Reflection at boundaries
