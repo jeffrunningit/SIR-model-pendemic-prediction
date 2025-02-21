@@ -36,8 +36,7 @@ document.getElementById("restartBtn").addEventListener("click", function() {
     isPaused = true;
     startSim();
     initializeChart();
-    document.getElementById("pauseBtn").innerText = isPaused ? "Begin" : "Pause";
-    isPaused = false;
+    document.getElementById("pauseBtn").innerText = "Begin";
 });
 // Pause button
 document.getElementById("pauseBtn").addEventListener("click", function() {
