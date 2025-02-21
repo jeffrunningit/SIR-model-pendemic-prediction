@@ -27,7 +27,7 @@ def index():
 @app.route('/start', methods=['POST'])
 def start():
     """Initialize the simulation"""
-    print("Initializing simulation...")  # Debugging log
+    print("Initializing simulation...") # Debugging Log
     params = request.get_json()
     
     global sim1
@@ -40,22 +40,29 @@ def start():
 
 @app.route('/data')
 def get_data():
-    #sim1.step(stepsPerDay)
-    data = {
-        "day" : sim1.day,
-        "boxsize" : sim1.box_size,
-        "state_count": sim1.statescount.tolist(),
-        "states": sim1.states.tolist(),
-        "positions": sim1.positions.tolist()
-    }
-    return jsonify(data)
+    try:
+        data = {
+            "day": sim1.day,
+            "boxsize": sim1.box_size,
+            "state_count": sim1.statescount.tolist(),
+            "states": sim1.states.tolist(),
+            "positions": sim1.positions.tolist(),
+        }
+        print(f"Sending Data: {data}")  # Debugging Log
+        return jsonify(data), 200
+    except Exception as e:
+        print(f"Error in /data: {str(e)}")  # Print exact error
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/step')
 def step():
-    stepsPerDay = int(request.args.get('stepsPerDay'))
-    sim1.step(stepsPerDay)
-    return jsonify({"message": "Stepped"}), 200
-
+    try:
+        stepsPerDay = int(request.args.get('stepsPerDay'))
+        sim1.step(stepsPerDay)
+        return jsonify({"message": "Stepped"}), 200
+    except Exception as e:
+        print(f"Error in /step: {str(e)}")  # Print exact error
+        return jsonify({"error": str(e)}), 500
     
 
 if __name__ == "__main__":
