@@ -96,6 +96,7 @@ function fetchData() {
         .then(data => {
             drawParticles(data.boxsize, data.positions, data.states, data.state_count);
             document.getElementById("totalInfected").innerText = ((data.state_count[1] + data.state_count[2]) / N * 100).toFixed(1);
+            
             if (document.getElementById("simulationDay").innerText != data.day){
                 document.getElementById("simulationDay").innerText = data.day
                 updateChart(data.day, data.state_count);
@@ -106,6 +107,9 @@ function fetchData() {
                 document.getElementById("pauseBtn").classList.add("hidden");
                 document.getElementById("pauseBtn").innerText = "Begin";
                 document.getElementById("diseaseStatus").classList.remove("hidden");
+
+                controller.abort();  // ✅ Stop any pending fetch request
+                console.log("Simulation ended. No more infected.");
             }
         });
 }
@@ -113,7 +117,7 @@ function fetchData() {
 let controller = new AbortController();
 
 function runSim() {
-    if (isPaused) return;
+    if (isPaused || reachedEnd) return;
 
     controller = new AbortController();
 
@@ -128,7 +132,7 @@ function runSim() {
             }
         });
 
-    if (!isPaused){
+    if (!isPaused && !reachedEnd) {
         setTimeout(runSim, 1000 / FPS);  // ✅ Always render at 30 FPS max
     }
 }
