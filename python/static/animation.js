@@ -2,7 +2,7 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const boxSize = 30;  // Match Python simulation size
 const N = 900;  // Number of particles
-const FPS = 15;  // Frames per second
+let FPS = 15;  // Frames per second
 
 canvas.width = 500;
 canvas.height = 500;
@@ -51,6 +51,12 @@ document.getElementById("speedSlider").addEventListener("input", function() {
     daysPerSec = this.value;
     stepsPerDay = Math.round(FPS / daysPerSec);
     document.getElementById("simSpeed").innerText = parseInt(daysPerSec);
+    //document.getElementById("daysPerSec").innerText = (fps/15).toFixed(1);
+});
+// fps slider
+document.getElementById("fpsSlider").addEventListener("input", function() {
+    FPS = this.value;
+    document.getElementById("fps").innerText = parseInt(FPS);
     //document.getElementById("daysPerSec").innerText = (fps/15).toFixed(1);
 });
 
