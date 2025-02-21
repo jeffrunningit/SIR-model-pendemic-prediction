@@ -68,4 +68,5 @@ def step():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))  # Get Railway-assigned port or use 8000
-    app.run(host="0.0.0.0", port=port, debug=False)
+    debug_mode = os.environ.get("DEBUG", "False").lower() == "true"
+    app.run(host="0.0.0.0", port=port, debug=debug_mode)
