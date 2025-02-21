@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 import numpy as np
 import sim_latest
+import os
 
 stepsPerDay = 10
 sim1 = sim_latest.Population(
