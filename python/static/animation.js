@@ -8,7 +8,7 @@ canvas.width = 500;
 canvas.height = 500;
 
 let stepsPerDay = 5;
-let daysPerSec = 30/5;
+let daysPerSec = 6;
 
 let infectionRadius;
 let infectionProb;
@@ -33,9 +33,11 @@ initializeChart();
 
 // Restart button
 document.getElementById("restartBtn").addEventListener("click", function() {
+    isPaused = true;
     startSim();
     initializeChart();
     document.getElementById("pauseBtn").innerText = isPaused ? "Begin" : "Pause";
+    isPaused = false;
 });
 // Pause button
 document.getElementById("pauseBtn").addEventListener("click", function() {
