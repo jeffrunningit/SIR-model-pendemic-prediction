@@ -79,11 +79,11 @@
             <input type="range" id="speedSlider" min="1" max="30" step="1" value="6" />
             <span id="simSpeed">6</span>
           </div>
-          <div class="slider-group">
+          <!-- <div class="slider-group">
             <label for="fpsSlider">FPS:</label>
             <input type="range" id="fpsSlider" min="1" max="30" step="1" value="10" />
             <span id="fps">10</span> FPS
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="controls">
@@ -132,6 +132,6 @@
     </p>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="{{ url_for('static', filename='animation.js') }}"></script>
+  <script src="{{ url_for('static', filename='animation_nofpsslider.js') }}"></script>
 </body>
 </html>

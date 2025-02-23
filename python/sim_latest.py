@@ -48,21 +48,24 @@ class Population:
         self.day = 0
         self.day_float = 0
         
-    def step(self, stepsPerday = 15):
-        """Move forward by a step"""
-        self.move(dt=1/stepsPerday)
-        self.day_float += 1 / stepsPerday
+    def step(self, daysPerStep = 0.5):
+        """Move forward by sub-steps if needed"""
+        substeps = int(daysPerStep//1) + 1
+        dt = daysPerStep / substeps
+        for _ in range(substeps):
+            self.move(dt=dt)
+            self.day_float += dt
 
-        # Infect and update once a day
-        if self.day_float >= self.day + 1:
-            self.infect()
-            self.update_infected_time()
-            self.statescount = np.array([
-                np.sum(self.states==0),
-                np.sum(self.states==1),
-                np.sum(self.states==2)
+            # Infect and update once a day
+            if self.day_float >= self.day + 1:
+                self.infect()
+                self.update_infected_time()
+                self.statescount = np.array([
+                    np.sum(self.states==0),
+                    np.sum(self.states==1),
+                    np.sum(self.states==2)
                 ])
-            self.day += 1
+                self.day += 1
             
 
     def move(self, dt):

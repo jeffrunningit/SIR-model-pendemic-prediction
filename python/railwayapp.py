@@ -22,8 +22,7 @@ app.json.sort_keys = False
 
 @app.route('/')
 def index():
-    return render_template("siminterface.html")
-    #return render_template("gptinterface.html")
+    return render_template("siminterface_nofpsslider.html")
 
 @app.route('/start', methods=['POST'])
 def start():
@@ -53,8 +52,9 @@ def get_data():
 
 @app.route('/step')
 def step():
-    stepsPerDay = int(request.args.get('stepsPerDay'))
-    sim1.step(stepsPerDay)
+    print('Stepping... daysperframe =', request.args.get('daysPerFrame'))
+    daysPerStep = float(request.args.get('daysPerStep'))
+    sim1.step(daysPerStep=daysPerStep)
     return jsonify({"message": "Stepped"}), 200
 
     

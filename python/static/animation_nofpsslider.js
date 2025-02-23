@@ -55,11 +55,11 @@ document.getElementById("speedSlider").addEventListener("input", function() {
     //document.getElementById("daysPerSec").innerText = (fps/15).toFixed(1);
 });
 // fps slider
-document.getElementById("fpsSlider").addEventListener("input", function() {
-    FPS = this.value;
-    document.getElementById("fps").innerText = parseInt(FPS);
-    //document.getElementById("daysPerSec").innerText = (fps/15).toFixed(1);
-});
+// document.getElementById("fpsSlider").addEventListener("input", function() {
+//     FPS = this.value;
+//     document.getElementById("fps").innerText = parseInt(FPS);
+//     //document.getElementById("daysPerSec").innerText = (fps/15).toFixed(1);
+// });
 
 function startSim() {
     // initialize or restarts the simulation

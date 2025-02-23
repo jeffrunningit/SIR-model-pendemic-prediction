@@ -1,146 +1,235 @@
-/* 🔹 Add transition effect for smooth updates */
-#parameters span {
-    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-/* 🔹 Style the entire page */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #000000;
-    text-align: center;
-}
+@font-face {
+    font-family: 'CMUSerif';
+    src: url('cmunrm.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+@font-face {
+    font-family: 'CMUSerifBold';
+    src: url('cmunrb.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
 
-/* 🔹 Use Flexbox to position the canvas & sidebar */
-.simulation-container {
+/* Use a modern monospace font and a dark background for a scientific look */
+body {
+    font-family: 'helvetica', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Header styling */
+  header {
+    font-family: 'CMUSerif', serif;
+    text-align: center;
+    padding: 20px 0;
+    background: #1e1e1e;
+    border-bottom: 1px solid #333;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    font-weight: normal;
+    color: #ffffff;
+  }
+  
+  /* Simulation container layout */
+  .simulation-container {
     display: flex;
-    align-items: flex-start; 
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+  }
+  
+  /* Sidebar styling */
+  .sidebar {
+    width: 350px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+  
+  h2 {
+    font-size: 2em;
+    font-weight: normal;
+    color: #4aa4ff  ;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  
+  h3 {
+    font-size: 1.3em;
+    font-weight: normal;
+    color: #0a84ff;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar p,
+  .sidebar label {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+  }
+  
+  .small-text {
+    font-size: 0.8em;
+    color:indianred;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  input[type="number"] {
+    width: 80px;
+    padding: 5px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #1e1e1e;
+    color: #e0e0e0;
+  }
+  
+  /* Slider container */
+  .slider-container {
+    margin: 15px 0;
+  }
+  
+  .slider-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  input[type="range"] {
+    flex-grow: 1;
+    background: #333;
+    height: 5px;
+    border-radius: 5px;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #0a84ff;
+    cursor: pointer;
+  }
+  
+  /* Controls (buttons) */
+  .controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    background: #0a84ff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  button:hover {
+    background: #0066cc;
+    transform: scale(1.05);
+  }
+  
+  /* Canvas container for simulation */
+  .canvas-container {
+    text-align: center;
+  }
+  
+  #canvas {
+    border: 2px solid #464646;
+    background-color: #000;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Canvas info styling */
+  .canvas-info h3 {
+    font-size: 1.5em;
+    margin: 5px 0;
+    color: #0a84ff;
+  }
+  
+  #diseaseStatus {
+    font-size: 1.2em;
+    color: #0f9d58;
+  }
+  
+  /* Graphs layout */
+  .graph-container {
+    display: flex;
     justify-content: center;
     gap: 20px;
-    max-width: 900px;
-    margin: auto;
-}
-/* 🔹 Center and style the graph */
-.graph-container {
-    width: 80%;
-    max-width: 700px;
-    height: 300px;
-    margin: 20px auto;  /* Centers the graph */
-    padding: 10px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* 🔹 Style the canvas (simulation box) */
-#canvas {
-    border: 2px solid white;
-    background-color: black;
-    border-radius: 5px;
-}
-/* 🔹 Sidebar for controls (position on the right) */
-/* 🔹 Sidebar Layout */
-.sidebar {
-    width: 250px;
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
-}
-
-/* 🔹 "Day Elapsed" Styling */
-#simulationDay {
-    font-size: 22px;
-    font-weight: bold;
-    color: #d32f2f; /* Red for emphasis */
-}
-
-.hidden {
-    display: none;
-}
-#diseaseStatus {
-    font-size: 18px;
-    font-weight: bold;
-    color: #19692c;  /* Green color */
-    text-align: center;
-    margin-top: 10px;
-    transition: opacity 0.5s ease-in-out;
-}
-
-/* 🔹 Small Text for Parameter Notice */
-.small-text {
-    font-size: 14px;
-    color: gray;
-    margin-bottom: 10px;
-}
-/* 🔹 Style input fields */
-input {
-    width: 60px;
-    padding: 5px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.slider-container p {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+  }
+  
+  .chart-wrapper {
+    flex: 1;
     display: flex;
-    align-items: center; /* 🔥 Ensures the slider and text align */
-    gap: 10px; /* Adds spacing between slider and text */
-}
-
-#speedSlider {
-    width: 80%;
-    flex-grow: 1; 
-    margin-top: 3px;
-}
-
-/* 🔹 Style buttons */
-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    background: #007BFF;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #0056b3;
-    transform: scale(1.05);
-}
-
-/* 🔹 Style for the GitHub icon */
-#github-icon {
-    width: 30px; /* 🔹 Set icon size */
-    height: 30px;
-    margin-left: 10px; /* 🔹 Space from text */
-    transition: transform 0.3s ease-in-out;
-}
-
-/* 🔹 Style the parameter display */
-#parameters {
-    font-size: 18px;
-    font-weight: bold;
-    background: #e3f2fd;
-    padding: 10px;
-    border-radius: 8px;
-}
-/* 🔹 Style the footer */
-#footer {
-    font-size: 16px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .chart-wrapper canvas {
+    width: 500px;
+    height: 500px;
+    max-width: 100%;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+  }
+  
+  /* Footer styling */
+  #footer {
     text-align: center;
-    color: #666;
-    margin-top: 20px;
-    padding: 10px;
-    background: #f4f4f4;
-    border-top: 1px solid #ddd;
-}
-
-/* 🔹 Animate updated parameters */
-.flash {
-    color: red;
+    font-size: 0.9em;
+    color: #888;
+    padding: 15px 0;
+    background: #1e1e1e;
+    border-top: 1px solid #333;
+    margin-top: 30px;
+  }
+  
+  /* Make the GitHub icon white by inverting its color */
+  #github-icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    transition: transform 0.3s;
+    filter: brightness(0) invert(1);  /* This makes the dark icon appear white */
+  }
+  
+  #github-icon:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Transition effects for updated parameters */
+  #parameters span {
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .flash {
+    color: #ff3b30;
     transform: scale(1.2);
-    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
+  }
+  
+  /* Hide elements with .hidden class */
+  .hidden {
+    display: none;
+  }
