@@ -86,10 +86,9 @@ function startSim() {
     })
         .then(response => response.json())
         .then(data => {
+            fetchData();
             console.log("Simulation restarted:", data);
-        });
-        
-    fetchData();
+        }); 
 }
 
 function fetchData() {
