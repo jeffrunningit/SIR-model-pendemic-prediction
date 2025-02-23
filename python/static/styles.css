@@ -13,7 +13,8 @@
 
 /* Use a modern monospace font and a dark background for a scientific look */
 body {
-    font-family: 'helvetica', sans-serif;
+    font-family: 'roboto', monospace;
+    font-size: smaller;
     background-color: #121212;
     color: #e0e0e0;
     margin: 0;
