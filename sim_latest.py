@@ -104,7 +104,7 @@ class Population:
                 if np.random.rand() < self.infection_probability:
                     self.states[susceptible_indices[idx]] = 1
                     
-        ## Brute force method looping over every pair of S and I particles
+        ## """Brute force method looping over every pair of S and I particles"""
         ## O(N^2) complexity
         #Ibefore = np.sum(self.states==1)
         # for i, j in product(infected_indices, susceptible_indices):
