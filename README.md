@@ -51,7 +51,6 @@ To run the simulation locally:
 
 ## Project structure
 
-    ```
     .
     ├── README.md
     ├── sim_latest.py
