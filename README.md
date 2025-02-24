@@ -1,4 +1,4 @@
-![#SIR Pandemic Simulation](sir_logo.png)
+![#SIR Pandemic Simulation](assets/sir_logo.png)
 ---
 This project is a simulation of a pandemic based on the classic SIR (Susceptible, Infected, Removed) model. It was built using Python, Flask, and JavaScript, and features real‑time visualization of the simulation via a web interface. The simulation demonstrates data modeling, numerical methods and programming skills.
 
@@ -15,7 +15,7 @@ The simulation models the spread of an infectious disease in a closed population
 The simulation is hosted online. You can view and interact with it here:  
 [https://sir-model-pendemic-prediction-production.up.railway.app/](https://sir-model-pendemic-prediction-production.up.railway.app/)
 
-<img src="sim_image.png" alt="Description" width="300"/>
+<img src="assets/sim_image.png" alt="Description" width="300"/>
 
 Running the app locally is recommended for best performance.
 
@@ -47,7 +47,7 @@ To run the simulation locally:
     ```bash
     python3 app.py
 
-4. 	Open your browser and navigate to http://localhost:8000 to see the simulation in action.
+4. 	Open your browser and navigate to http://localhost:8000 to see the simulation interface.
 
 ## Project structure
 
