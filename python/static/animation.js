@@ -2,7 +2,7 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const boxSize = 30;  // Match Python simulation size
 const N = 600;  // Number of particles
-let FPS = 10;  // Frames per second
+let FPS = 30;  // Frames per second
 
 canvas.width = 500;
 canvas.height = 500;
